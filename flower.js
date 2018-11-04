@@ -1,7 +1,8 @@
+const COLORS = ['purple', 'blue', 'green', 'red','orange', 'yellow']
 
 
 function createFlowerOfLife() {
-    var ringSequence = [1, 6, 6, 6, 6, 6, 6]
+    var ringSequence = [1, 7, 19, 37, 61]
     var speed = 500;
     var circleRadius = 50;
 
@@ -116,16 +117,22 @@ function createFlowerOfLife() {
         }
 
         // console.log(circles)
+        var layer = 0;
         _.flatten(ringGroups).forEach((circle,j) => {
+            if (j >= ringSequence[layer]) {
+                layer++
+            }
+
             circleData.circles.push({
                 cx: circle.cx,
                 cy: circle.cy,
                 id: 'circle-' + j,
                 angle: circle.angle,
                 r: circleRadius,
-                fill: 'none',
-                stroke: 'red',
-                strokeWidth: '2px'
+                fill: COLORS[layer],
+                fillOpacity: 0.1,
+                stroke: COLORS[layer],
+                strokeWidth: '1px'
             })
         })
 
@@ -151,17 +158,19 @@ function createFlowerOfLife() {
             .enter()
             .append("circle")
             .attr("id", d => d.id)
-            .attr("r", d => d.r)
             .attr("cx", d => d.cx)
             .attr("cy", d => d.cy)
-            .attr("data-angle", d => d.angle)
+            .transition()
+            .attr("r", d => d.r)
             .attr("fill", d => d.fill)
+            .attr("fill-opacity", d => d.fillOpacity)
             .attr("stroke", d => d.stroke)
             .attr("stroke-width", d => d.strokeWidth)
+            .duration(5000)
 
-        circles
-            .exit()
-            .remove();
+        // circles
+            // .exit()
+            // .remove();
     }
 
 
