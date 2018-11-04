@@ -1,8 +1,9 @@
-const COLORS = ['purple', 'blue', 'green', 'red','orange', 'yellow']
+const COLORS = ['purple', 'blue', 'green', 'red','orange']
+// const COLORS = ['black']
 
 
 function createFlowerOfLife() {
-    var ringSequence = [1, 7, 19, 37, 61]
+    var ringSequence = [1, 7, 19, 37, 61, 91, 127]
     var speed = 500;
     var circleRadius = 50;
 
@@ -105,11 +106,40 @@ function createFlowerOfLife() {
         }
 
         if(numLevels >= 6) {
-            // console.log('yolo')
+            // var extend = extendCircles(ringGroups[2], circleRadius * 3);
+            // var middlePoints = middlePointsArrayOfSet(extend);
+            // var mainPoints = _.flatten(_.unzip([extend, middlePoints]));
+            // var moreMiddlePoints = middlePointsArrayOfSet(mainPoints);
+            // var oneFourth = []
+            // var threeFourths = []
+            // moreMiddlePoints.forEach((point, i) => {
+            //     if (i === 0 || i % 2 == 0) {
+            //         oneFourth.push(point)
+            //     } else {
+            //         threeFourths.push(point)
+            //     }
+            // });
+            // ringGroups.push(_.flatten(_.unzip([mainPoints, moreMiddlePoints])))
+            // ringGroups.push(_.flatten(_.unzip([extend, oneFourth, middlePoints, threeFourths])))
+            // ringGroups.push(_.flatten(_.unzip([extend])))
         }
 
         if(numLevels >= 7) {
-            // console.log('yolo')
+            var extend = extendCircles(ringGroups[1], circleRadius * 5);
+            // var middlePoints = middlePointsArrayOfSet(extend);
+            // var mainPoints = _.flatten(_.unzip([extend, middlePoints]));
+            // var moreMiddlePoints = middlePointsArrayOfSet(mainPoints);
+            // var oneFourth = []
+            // var threeFourths = []
+            // moreMiddlePoints.forEach((point, i) => {
+            //     if (i === 0 || i % 2 == 0) {
+            //         oneFourth.push(point)
+            //     } else {
+            //         threeFourths.push(point)
+            //     }
+            // });
+            // ringGroups.push(_.flatten(_.unzip([extend, oneFourth, middlePoints, threeFourths])))
+            ringGroups.push(_.flatten(_.unzip([extend])))
         }
 
         if(numLevels >= 8) {
@@ -129,9 +159,9 @@ function createFlowerOfLife() {
                 id: 'circle-' + j,
                 angle: circle.angle,
                 r: circleRadius,
-                fill: COLORS[layer],
+                fill: COLORS[layer % COLORS.length],
                 fillOpacity: 0.1,
-                stroke: COLORS[layer],
+                stroke: COLORS[layer % COLORS.length],
                 strokeWidth: '1px'
             })
         })
@@ -148,7 +178,7 @@ function createFlowerOfLife() {
         .attr("height", w);
 
 
-    var data = generateCircleData(5);
+    var data = generateCircleData(6);
 
     function render(data) {
         var circles = d3.select("svg")
